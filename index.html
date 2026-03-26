@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>💄 Beauty Store Pro</title>
+<title>💄 Beauty Store PRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
 <div class="container">
 
   <h2>Agregar Producto</h2>
@@ -20,10 +21,13 @@
   <h2>Productos</h2>
   <ul id="listaProductos" class="productos"></ul>
 
-  <h2>Carrito 🛒</h2>
-  <ul id="carritoLista" class="carrito"></ul>
-  <p>Total: $<span id="total">0</span></p>
-  <button id="btnPagar">Pagar 💳</button>
+  <div class="carrito-container">
+    <h2>Carrito 🛒</h2>
+    <ul id="carritoLista" class="carrito"></ul>
+    <p>Total: $<span id="total">0.00</span></p>
+    <button id="btnPagar">Pagar 💳</button>
+  </div>
+
 </div>
 
 <script type="module" src="script.js"></script>
