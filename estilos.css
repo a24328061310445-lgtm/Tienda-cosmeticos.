@@ -1,0 +1,111 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+    color: white;
+    font-size: 45px;
+}
+
+.subtitulo {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 15px 30px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+input {
+    width: 95%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    background: #f5f5f5;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#btnAgregar {
+    background: #ff4d6d;
+    color: white;
+}
+#btnAgregar:hover {
+    background: #ff1e4d;
+}
+
+.buscador {
+    width: 98%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.lista {
+    list-style: none;
+    padding: 0;
+}
+.lista li {
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lista button {
+    margin-left: 5px;
+}
+.btnEliminar {
+    background: #ff4d6d;
+    color: white;
+}
+.btnEliminar:hover {
+    background: #ff1e4d;
+}
+.btnCarrito {
+    background: #007bff;
+    color: white;
+}
+.btnCarrito:hover {
+    background: #0056b3;
+}
+
+.carrito ul {
+    list-style: none;
+    padding: 0;
+}
+.carrito li {
+    margin: 8px 0;
+}
+
+#btnPagar {
+    background: #28a745;
+    color: white;
+}
+#btnPagar:hover {
+    background: #1e7e34;
+}

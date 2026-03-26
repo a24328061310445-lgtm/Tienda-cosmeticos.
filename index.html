@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>💄 Beauty Store Pro</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <h1 class="titulo">💄 Beauty Store</h1>
+    <p class="subtitulo">✨ Compra maquillaje como toda una pro ✨</p>
+
+    <!-- FORM -->
+    <div class="card">
+        <h3>Agregar Producto</h3>
+        <input type="text" id="nombre" placeholder="💋 Nombre">
+        <input type="number" id="precio" placeholder="💰 Precio">
+        <input type="text" id="categoria" placeholder="🧴 Categoría">
+        <button id="btnAgregar">Agregar ✨</button>
+    </div>
+
+    <!-- BUSCADOR -->
+    <input type="text" id="buscador" class="buscador" placeholder="🔍 Buscar producto...">
+
+    <!-- PRODUCTOS -->
+    <h2>🛍️ Productos</h2>
+    <ul id="lista" class="lista"></ul>
+
+    <!-- CARRITO -->
+    <div class="card carrito">
+        <h2>🛒 Carrito</h2>
+        <ul id="carritoLista"></ul>
+        <h3>Total: $<span id="total">0</span></h3>
+        <button id="btnPagar">Pagar 💳</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
