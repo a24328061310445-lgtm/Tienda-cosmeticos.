@@ -1,119 +1,113 @@
-const API = "https://tienda-cosmeticos-4lfg.onrender.com"; // reemplaza con tu URL de Render después
+// script.js
+import { db } from "./firebase.js";
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = [];
+const productosCol = collection(db, "productos");
 
-// Cargar productos
+// 🔄 Cargar productos
 async function cargarProductos() {
-  try {
-    const res = await fetch(API);
-    const data = await res.json();
-    const lista = document.getElementById("lista");
-    lista.innerHTML = "";
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
 
-    data.forEach(p => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        ${p.nombre} - $${p.precio} (${p.categoria})
-        <div>
-          <button class="btnCarrito" onclick='agregarAlCarrito(${JSON.stringify(p)})'>🛒</button>
-          <button data-id="${p._id}" class="btnEliminar">❌</button>
-        </div>
-      `;
-      lista.appendChild(li);
-    });
-  } catch (error) {
-    console.log("❌ Error al cargar:", error);
-  }
+  const snapshot = await getDocs(productosCol);
+  snapshot.forEach(docSnap => {
+    const p = docSnap.data();
+    p.id = docSnap.id;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${p.nombre} - $${p.precio} (${p.categoria})
+      <div>
+        <button class="btnCarrito" onclick='agregarAlCarrito(${JSON.stringify(p)})'>🛒</button>
+        <button data-id="${p.id}" class="btnEliminar">❌</button>
+      </div>
+    `;
+    lista.appendChild(li);
+  });
 }
 
-// Agregar producto
+// ➕ Agregar producto
 async function agregarProducto() {
   const nombre = document.getElementById("nombre").value;
   const precio = document.getElementById("precio").value;
   const categoria = document.getElementById("categoria").value;
-  if (!nombre || !precio || !categoria) { alert("⚠️ Llena todos los campos"); return; }
 
-  try {
-    await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, precio: Number(precio), categoria })
-    });
+  if (!nombre || !precio || !categoria) return alert("⚠️ Llena todos los campos");
 
-    document.getElementById("nombre").value = "";
-    document.getElementById("precio").value = "";
-    document.getElementById("categoria").value = "";
+  await addDoc(productosCol, {
+    nombre,
+    precio: Number(precio),
+    categoria
+  });
 
-    cargarProductos();
-  } catch (error) {
-    console.log("❌ Error al agregar:", error);
-  }
+  document.getElementById("nombre").value = "";
+  document.getElementById("precio").value = "";
+  document.getElementById("categoria").value = "";
+
+  cargarProductos();
 }
 
-// Eliminar producto
-async function eliminarProducto(id) {
-  try {
-    await fetch(`${API}/${id}`, { method: "DELETE" });
-    cargarProductos();
-  } catch (error) {
-    console.log("❌ Error al eliminar:", error);
-  }
-}
-
-// Delegación eliminar
-document.addEventListener("click", function(e) {
+// 🗑️ Eliminar producto
+document.addEventListener("click", async function(e) {
   if (e.target.classList.contains("btnEliminar")) {
     const id = e.target.getAttribute("data-id");
-    eliminarProducto(id);
+    await deleteDoc(doc(db, "productos", id));
+    cargarProductos();
   }
 });
 
-// Carrito
+// 🛒 Carrito
 function agregarAlCarrito(producto) {
   carrito.push(producto);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
   renderCarrito();
 }
 
 function renderCarrito() {
   const lista = document.getElementById("carritoLista");
   const totalSpan = document.getElementById("total");
+
   lista.innerHTML = "";
   let total = 0;
+
   carrito.forEach((p, index) => {
     total += p.precio;
     const li = document.createElement("li");
-    li.innerHTML = `${p.nombre} - $${p.precio} <button onclick="eliminarDelCarrito(${index})">❌</button>`;
+    li.innerHTML = `
+      ${p.nombre} - $${p.precio}
+      <button onclick="eliminarDelCarrito(${index})">❌</button>
+    `;
     lista.appendChild(li);
   });
+
   totalSpan.textContent = total;
 }
 
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
   renderCarrito();
 }
 
-// Pagar
+// 💳 Pagar
 document.getElementById("btnPagar").addEventListener("click", () => {
-  if (carrito.length === 0) { alert("🛒 Tu carrito está vacío"); return; }
+  if (carrito.length === 0) return alert("🛒 Tu carrito está vacío");
+
   alert("💖 Compra realizada con éxito 💳✨");
   carrito = [];
-  localStorage.removeItem("carrito");
   renderCarrito();
 });
 
-// Buscador
+// 🔍 Buscador
 document.getElementById("buscador").addEventListener("input", function () {
   const texto = this.value.toLowerCase();
   const items = document.querySelectorAll("#lista li");
-  items.forEach(li => li.style.display = li.textContent.toLowerCase().includes(texto) ? "flex" : "none");
+  items.forEach(li => {
+    li.style.display = li.textContent.toLowerCase().includes(texto) ? "flex" : "none";
+  });
 });
 
-// Botón agregar
+// 🎯 Botón agregar
 document.getElementById("btnAgregar").addEventListener("click", agregarProducto);
 
-// Inicio
+// 🚀 Iniciar
 cargarProductos();
-renderCarrito();
