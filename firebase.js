@@ -1,15 +1,17 @@
-// firebase.js
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "TU-APIKEY",
-  authDomain: "TU-PROYECTO.firebaseapp.com",
-  projectId: "TU-PROYECTO",
-  storageBucket: "TU-PROYECTO.appspot.com",
-  messagingSenderId: "TU-SENDER-ID",
-  appId: "TU-APP-ID"
+  apiKey: "AIzaSyD3Cms2PyOYMCIYVgv_e0YtBHyZSqi6AOA",
+  authDomain: "tienda-cosmeticos-c0e38.firebaseapp.com",
+  projectId: "tienda-cosmeticos-c0e38",
+  storageBucket: "tienda-cosmeticos-c0e38.firebasestorage.app",
+  messagingSenderId: "222333125235",
+  appId: "1:222333125235:web:b4fef9bcf45076c7a96006"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
