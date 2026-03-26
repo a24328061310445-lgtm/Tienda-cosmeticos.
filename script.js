@@ -1,41 +1,33 @@
-// script.js
-import { db } from "./firebase.js"; // 👈 Importamos la DB
+import { db } from './firebase.js';
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 
 let carrito = [];
 
-// 🔹 Colección de productos
-const productosCol = collection(db, "productos");
-
-// 🔄 Cargar productos desde Firestore
+// 🔄 Cargar productos
 async function cargarProductos() {
-  try {
-    const snapshot = await getDocs(productosCol);
-    const lista = document.getElementById("lista");
-    lista.innerHTML = "";
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
 
-    snapshot.forEach((docSnap) => {
-      const p = { id: docSnap.id, ...docSnap.data() };
+  const querySnapshot = await getDocs(collection(db, "productos"));
+  querySnapshot.forEach((docSnap) => {
+    const p = { id: docSnap.id, ...docSnap.data() };
 
-      const li = document.createElement("li");
-      li.innerHTML = `
-        ${p.nombre} - $${p.precio} (${p.categoria})
-        <div>
-          <button class="btnCarrito" onclick='agregarAlCarrito(${JSON.stringify(p)})'>🛒</button>
-          <button data-id="${p.id}" class="btnEliminar">❌</button>
-        </div>
-      `;
-      lista.appendChild(li);
-    });
-  } catch (error) {
-    console.log("❌ Error al cargar:", error);
-  }
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${p.nombre} - $${p.precio} (${p.categoria})
+      <div>
+        <button class="btnCarrito" onclick='agregarAlCarrito(${JSON.stringify(p)})'>🛒</button>
+        <button data-id="${p.id}" class="btnEliminar">❌</button>
+      </div>
+    `;
+    lista.appendChild(li);
+  });
 }
 
 // ➕ Agregar producto
 async function agregarProducto() {
   const nombre = document.getElementById("nombre").value;
-  const precio = document.getElementById("precio").value;
+  const precio = Number(document.getElementById("precio").value);
   const categoria = document.getElementById("categoria").value;
 
   if (!nombre || !precio || !categoria) {
@@ -43,34 +35,22 @@ async function agregarProducto() {
     return;
   }
 
-  try {
-    await addDoc(productosCol, {
-      nombre,
-      precio: Number(precio),
-      categoria
-    });
+  await addDoc(collection(db, "productos"), { nombre, precio, categoria });
 
-    document.getElementById("nombre").value = "";
-    document.getElementById("precio").value = "";
-    document.getElementById("categoria").value = "";
+  document.getElementById("nombre").value = "";
+  document.getElementById("precio").value = "";
+  document.getElementById("categoria").value = "";
 
-    cargarProductos();
-  } catch (error) {
-    console.log("❌ Error al agregar:", error);
-  }
+  cargarProductos();
 }
 
 // 🗑️ Eliminar producto
 async function eliminarProducto(id) {
-  try {
-    await deleteDoc(doc(db, "productos", id));
-    cargarProductos();
-  } catch (error) {
-    console.log("❌ Error al eliminar:", error);
-  }
+  await deleteDoc(doc(db, "productos", id));
+  cargarProductos();
 }
 
-// 🎯 Evento eliminar (más seguro)
+// Evento eliminar
 document.addEventListener("click", function(e) {
   if (e.target.classList.contains("btnEliminar")) {
     const id = e.target.getAttribute("data-id");
@@ -78,13 +58,12 @@ document.addEventListener("click", function(e) {
   }
 });
 
-// 🛒 Agregar al carrito
+// 🛒 Carrito
 function agregarAlCarrito(producto) {
   carrito.push(producto);
   renderCarrito();
 }
 
-// 🔄 Render carrito
 function renderCarrito() {
   const lista = document.getElementById("carritoLista");
   const totalSpan = document.getElementById("total");
@@ -94,7 +73,6 @@ function renderCarrito() {
 
   carrito.forEach((p, index) => {
     total += p.precio;
-
     const li = document.createElement("li");
     li.innerHTML = `
       ${p.nombre} - $${p.precio}
@@ -106,39 +84,34 @@ function renderCarrito() {
   totalSpan.textContent = total;
 }
 
-// ❌ eliminar del carrito
 function eliminarDelCarrito(index) {
   carrito.splice(index, 1);
   renderCarrito();
 }
 
-// 💳 pagar
+// 💳 Pagar
 document.getElementById("btnPagar").addEventListener("click", () => {
   if (carrito.length === 0) {
     alert("🛒 Tu carrito está vacío");
     return;
   }
-
   alert("💖 Compra realizada con éxito 💳✨");
-
   carrito = [];
   renderCarrito();
 });
 
-// 🔍 buscador
+// 🔍 Buscador
 document.getElementById("buscador").addEventListener("input", function () {
   const texto = this.value.toLowerCase();
   const items = document.querySelectorAll("#lista li");
 
   items.forEach(li => {
-    li.style.display = li.textContent.toLowerCase().includes(texto)
-      ? "flex"
-      : "none";
+    li.style.display = li.textContent.toLowerCase().includes(texto) ? "flex" : "none";
   });
 });
 
-// 🎯 botón agregar
+// 🎯 Botón agregar
 document.getElementById("btnAgregar").addEventListener("click", agregarProducto);
 
-// 🚀 iniciar
+// 🚀 Iniciar
 cargarProductos();
