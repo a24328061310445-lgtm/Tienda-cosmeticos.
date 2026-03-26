@@ -1,4 +1,4 @@
-const API = "https://TU-DOMINIO-RENDER/productos"; // reemplaza con tu URL de Render después
+const API = "https://tienda-cosmeticos-4lfg.onrender.com"; // reemplaza con tu URL de Render después
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
