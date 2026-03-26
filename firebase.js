@@ -1,8 +1,8 @@
-// Importar Firebase
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // <-- esto es nuevo
+// Importa Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-// Tu configuración de Firebase
+// Configuración de tu proyecto
 const firebaseConfig = {
   apiKey: "AIzaSyD3Cms2PyOYMCIYVgv_e0YtBHyZSqi6AOA",
   authDomain: "tienda-cosmeticos-c0e38.firebaseapp.com",
@@ -12,8 +12,8 @@ const firebaseConfig = {
   appId: "1:222333125235:web:b4fef9bcf45076c7a96006"
 };
 
-// Inicializar Firebase
+// Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// Inicializar Firestore
-export const db = getFirestore(app);
+export { db, collection, addDoc, getDocs };
