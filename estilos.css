@@ -1,111 +1,62 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f78ca0, #f9748f);
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
 }
 
-.titulo {
-    text-align: center;
-    color: white;
-    font-size: 45px;
+h2 {
+  color: #222;
 }
 
-.subtitulo {
-    text-align: center;
-    color: white;
-    margin-bottom: 30px;
-}
-
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 15px 30px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-}
-
-input {
-    width: 95%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 10px;
-    border: none;
-    background: #f5f5f5;
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid #ddd;
 }
 
 button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-top: 10px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ff5ca2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-#btnAgregar {
-    background: #ff4d6d;
-    color: white;
-}
-#btnAgregar:hover {
-    background: #ff1e4d;
+button:hover {
+  background-color: #ff1c6e;
 }
 
-.buscador {
-    width: 98%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    margin-bottom: 20px;
+.productos li, .carrito li {
+  background: #f1f1f1;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.lista {
-    list-style: none;
-    padding: 0;
-}
-.lista li {
-    background: white;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.lista button {
-    margin-left: 5px;
-}
-.btnEliminar {
-    background: #ff4d6d;
-    color: white;
-}
-.btnEliminar:hover {
-    background: #ff1e4d;
-}
-.btnCarrito {
-    background: #007bff;
-    color: white;
-}
-.btnCarrito:hover {
-    background: #0056b3;
+.carrito li button {
+  background-color: #4CAF50;
+  font-size: 12px;
 }
 
-.carrito ul {
-    list-style: none;
-    padding: 0;
-}
-.carrito li {
-    margin: 8px 0;
-}
-
-#btnPagar {
-    background: #28a745;
-    color: white;
-}
-#btnPagar:hover {
-    background: #1e7e34;
+.carrito li button:hover {
+  background-color: #45a049;
 }
